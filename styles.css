@@ -1,0 +1,162 @@
+/* Genel sıfırlama ve kutu modelleme */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212; /* Daha koyu arka plan */
+    color: #E0E0E0; /* Soluk gri yazı rengi */
+    text-align: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px; /* Maksimum genişlik */
+    margin: 0 auto; /* Sayfayı ortalar */
+    padding: 20px;
+    position: relative;
+}
+
+.content-container { /* Yeni konteynır stil */
+    background-color: #1C1C1C; /* İçeriğin arka planını koyulaştırdık */
+    padding: 40px;
+    border-radius: 15px; /* Kenarları yuvarlattık */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7); /* Konteynıra gölge ekledik */
+    margin-top: 30px;
+}
+
+.image-slider img {
+    width: 70%;
+    max-width: 450px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* İçerik */
+.content {
+    margin-top: 40px;
+}
+
+h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+p {
+    font-size: 20px;
+    margin: 15px 0;
+    color: #B0B0B0;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 15px auto;
+}
+
+strong {
+    color: #F1A7C1;
+}
+
+h2 {
+    font-size: 28px;
+    color: #F1A7C1;
+    margin-top: 30px;
+    text-transform: uppercase;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 20px;
+}
+
+ul li {
+    font-size: 18px;
+    color: #B0B0B0;
+    margin: 8px 0;
+}
+
+/* Buton stil */
+.buttons {
+    margin: 30px 0;
+}
+
+button {
+    background-color: #6200EE;
+    color: white;
+    padding: 15px 35px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    margin: 0 10px;
+    border-radius: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #3700B3;
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(2px);
+}
+
+/* Footer */
+.footer {
+    margin-top: 40px;
+    font-size: 14px;
+    color: #B0B0B0;
+}
+
+.social-links a {
+    color: #E0E0E0;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #F1A7C1;
+}
+
+/* Modern renkli yazı */
+.token-highlight {
+    color: #F1A7C1;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Mobil uyumlu tasarım */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .image-slider img {
+        width: 80%;
+        max-width: 350px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    p {
+        font-size: 18px;
+    }
+
+    button {
+        padding: 12px 28px;
+        font-size: 16px;
+    }
+}
