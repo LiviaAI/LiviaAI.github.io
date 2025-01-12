@@ -1,21 +1,50 @@
-let currentImage = 1;
-const imageElement = document.getElementById("slider-img");
+// Token profil verilerini al
+async function fetchTokenProfiles() {
+    const response = await fetch('https://api.dexscreener.com/token-profiles/latest/v1', {
+        method: 'GET',
+        headers: {},
+    });
 
-function changeImage() {
-    currentImage = currentImage === 1 ? 2 : 1;
-    imageElement.src = `livia${currentImage}.png`;
+    const data = await response.json();
+    displayTokenProfiles(data);
 }
 
-// Resim değişim fonksiyonu her 4 saniyede bir çalışacak
-setInterval(changeImage, 4000);
+// Token profil bilgilerini ekrana yerleştir
+function displayTokenProfiles(data) {
+    const tokenList = document.getElementById('token-list');
+    
+    const tokenCard = document.createElement('div');
+    tokenCard.classList.add('token-card');
 
-// Whitepaper indirme fonksiyonu
-function downloadWhitepaper() {
-    const link = document.createElement('a');
-    link.href = 'whitepaper.pdf';
-    link.download = 'whitepaper.pdf';
-    link.click();
+    // Token simgesi
+    const tokenIcon = document.createElement('img');
+    tokenIcon.src = data.icon;
+    tokenIcon.alt = 'Token Icon';
+
+    // Token başlığı ve açıklaması
+    const tokenInfo = document.createElement('div');
+    const tokenName = document.createElement('h3');
+    tokenName.innerText = data.tokenAddress;
+    const tokenDescription = document.createElement('p');
+    tokenDescription.innerText = data.description;
+
+    // Link
+    const tokenLink = document.createElement('a');
+    tokenLink.href = data.url;
+    tokenLink.target = '_blank';
+    tokenLink.innerText = 'Resmi Web Sitesi';
+
+    // Card içeriklerini ekle
+    tokenInfo.appendChild(tokenName);
+    tokenInfo.appendChild(tokenDescription);
+    tokenInfo.appendChild(tokenLink);
+    
+    tokenCard.appendChild(tokenIcon);
+    tokenCard.appendChild(tokenInfo);
+    
+    // Listeye token'ı ekle
+    tokenList.appendChild(tokenCard);
 }
 
-// JavaScript'in çalışıp çalışmadığını kontrol etme (opsiyonel)
-console.log('JavaScript dosyası yüklendi!');
+// İlk token profilini getir
+fetchTokenProfiles();
