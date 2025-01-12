@@ -32,13 +32,13 @@ function displayTokenProfiles() {
 
         // Token ikonu
         const tokenIcon = document.createElement('img');
-        tokenIcon.src = token.icon;
+        tokenIcon.src = token.icon || '';  // Eğer ikon yoksa boş bırak
         tokenIcon.alt = 'Token Icon';
 
         // Token bilgileri
         const tokenInfo = document.createElement('div');
         const tokenName = document.createElement('h3');
-        tokenName.innerText = token.tokenAddress || 'Token Address Unavailable';
+        tokenName.innerText = token.tokenAddress ? token.tokenAddress : 'Token Address Unavailable';  // Eğer adres yoksa uygun metin
         const tokenDescription = document.createElement('p');
         tokenDescription.innerText = `Description: "${token.description || 'No description available.'}"`;
 
@@ -79,13 +79,17 @@ function displayTokenProfiles() {
 
 // Token adresini kopyala
 function copyToClipboard(address) {
-    const el = document.createElement('textarea');
-    el.value = address;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-    alert('Token Address copied!');
+    if (address) {
+        const el = document.createElement('textarea');
+        el.value = address;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        alert('Token Address copied!');
+    } else {
+        alert('No address to copy');
+    }
 }
 
 // Sayfada yeni tokenlar eklendikçe, scroll ile daha fazla yükleyebilmek için
