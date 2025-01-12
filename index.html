@@ -4,22 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Token Profiles</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css"> <!-- CSS dosyasını bağlayacağız -->
 </head>
 <body>
+
     <header>
-        <h1>Latest Token Profiles</h1>
-        <p>Explore the latest tokens added to the platform.</p>
+        <h1>Live Token Profiles</h1>
+        <p>Explore the latest tokens from multiple blockchains</p>
     </header>
 
-    <main id="token-list">
-        <!-- Token profiles will be listed here -->
+    <main>
+        <div id="loading" class="loading">Loading...</div> <!-- Yükleme göstergesi -->
+
+        <div id="token-list" class="token-list"> <!-- Token'lar burada listelenecek -->
+            <!-- Token'lar buraya eklenip görselleştirilecek -->
+        </div>
     </main>
 
     <footer>
-        <p>Powered by DEX Screener API</p>
+        <p>&copy; 2025 Token Explorer. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js"></script> <!-- JS dosyasını bağlayacağız -->
 </body>
 </html>
