@@ -31,6 +31,13 @@ function displayTokenProfiles() {
 
         const tokenInfo = document.createElement('div');
         
+        // Buy Token Link for each token
+        const buyTokenLink = document.createElement('a');
+        buyTokenLink.href = `https://www.buy-token.com/${token.tokenAddress}`;  // Example of Buy Token link per token
+        buyTokenLink.target = '_blank';
+        buyTokenLink.innerText = 'BUY TOKEN';
+        buyTokenLink.classList.add('buy-token');
+
         // ChainId ve Token Address
         const chainId = document.createElement('p');
         chainId.innerText = `CHAIN: ${token.chainId ? token.chainId.toUpperCase() : 'N/A'}`;
@@ -62,6 +69,7 @@ function displayTokenProfiles() {
             tokenInfo.appendChild(linkElement);
         });
 
+        tokenInfo.appendChild(buyTokenLink);
         tokenInfo.appendChild(chainId);
         tokenInfo.appendChild(tokenAddressContainer);
         tokenInfo.appendChild(description);
