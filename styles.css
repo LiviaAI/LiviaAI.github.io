@@ -36,12 +36,11 @@ header p {
 
 /* Token listesi */
 .token-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: block;  /* Flex yerine block, grid vb. kullanılabilir */
     margin: 20px;
 }
 
+/* Token kartları */
 .token-card {
     display: flex;
     flex-direction: row;
@@ -54,8 +53,10 @@ header p {
     color: white;
     opacity: 0;
     animation: fadeIn 0.5s forwards;
+    transition: all 0.3s ease-in-out;
 }
 
+/* Token kartı resmi */
 .token-card img {
     width: 60px;
     height: 60px;
@@ -63,6 +64,7 @@ header p {
     margin-right: 20px;
 }
 
+/* Token bilgileri */
 .token-info {
     display: flex;
     flex-direction: column;
@@ -81,22 +83,16 @@ header p {
     text-decoration: underline;
 }
 
+/* Kopyalama butonu */
 .copy-button {
-    display: none;
     color: #4CAF50;
     cursor: pointer;
+    display: none;
 }
 
+/* Token address hover'da kopyalama butonu görünür */
 .token-address-container:hover .copy-button {
     display: inline;
-}
-
-/* Yükleme göstergesi */
-.loading {
-    text-align: center;
-    font-size: 1.5em;
-    color: #fff;
-    display: none; /* Başlangıçta gizli */
 }
 
 /* Footer */
