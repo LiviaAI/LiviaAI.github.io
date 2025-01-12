@@ -1,37 +1,30 @@
 let tokenData = []; // Tüm token verileri
-let currentTokenIndex = 0; // Sayfalama için indeks takip
+let currentTokenIndex = 0; // Sayfalama için indeks
 
-// API'den token profil verilerini alıyoruz
+// Token profil verilerini API'den al
 async function fetchTokenProfiles() {
     try {
-        const response = await fetch('https://api.dexscreener.com/token-profiles/latest/v1', {
-            method: 'GET',
-            headers: {},
-        });
-
+        const response = await fetch('https://api.dexscreener.com/token-profiles/latest/v1');
         const data = await response.json();
-        console.log('Fetched data:', data); // API'den gelen veriyi konsola yazdırıyoruz
 
-        // Eğer veri gelirse, token verilerini diziye ekle
-        if (data && Array.isArray(data)) {
-            tokenData = [...tokenData, ...data]; // Yeni token verilerini ekle
-            displayTokenProfiles(); // Veriyi sayfada göster
-        } else {
-            console.error('Token verisi alınamadı veya veri formatı yanlış');
-        }
+        // Verileri tokenData dizisine ekle
+        tokenData = [...tokenData, ...data];
+
+        // Token'ları ekranda göster
+        displayTokenProfiles();
     } catch (error) {
-        console.error("API hatası:", error);
+        console.error("Veri çekilirken hata oluştu:", error);
     }
 }
 
-// Sayfada token'ları gösterme
+// Token'ları sayfada göster
 function displayTokenProfiles() {
     const tokenList = document.getElementById('token-list');
-    
-    // Her seferinde token-list içeriğini temizle (yeni veri eklenirken eski veriyi sil)
+
+    // Listeden eski tokenları temizle (scrolling ile yeni eklenen tokenlar için)
     tokenList.innerHTML = '';
 
-    // En son 20 token'i göster
+    // Son 20 token'ı al ve göster
     const tokensToShow = tokenData.slice(currentTokenIndex, currentTokenIndex + 20);
     tokensToShow.forEach(token => {
         const tokenCard = document.createElement('div');
@@ -39,77 +32,85 @@ function displayTokenProfiles() {
 
         // Token ikonu
         const tokenIcon = document.createElement('img');
-        tokenIcon.src = token.icon || 'default-icon.png'; // Varsayılan bir ikon kullan
+        tokenIcon.src = token.icon;
         tokenIcon.alt = 'Token Icon';
 
-        // Token detayları
+        // Token bilgileri
         const tokenInfo = document.createElement('div');
-        
-        // Token adı
         const tokenName = document.createElement('h3');
         tokenName.innerText = token.tokenAddress || 'Token Address Unavailable';
-
-        // Token açıklaması
         const tokenDescription = document.createElement('p');
-        tokenDescription.innerText = token.description || 'No description available.';
-        
-        // Chain ID ve token adresi
+        tokenDescription.innerText = `Description: "${token.description || 'No description available.'}"`;
+
+        // Chain ID ve Token Adresi
         const chainId = document.createElement('p');
         chainId.innerText = `Chain: ${token.chainId ? token.chainId.toUpperCase() : 'N/A'}`;
-        
+
         const tokenAddress = document.createElement('p');
-        tokenAddress.innerText = `Token Address: ${token.tokenAddress || 'N/A'}`;
-        tokenAddress.classList.add('token-address'); // Kopyalama için class ekliyoruz
+        tokenAddress.classList.add('token-address-container');
+        tokenAddress.innerHTML = `Token Address: <span class="copy-token">${token.tokenAddress || 'N/A'}</span>`;
 
-        // Token linki (buy token vs.)
-        const tokenLink = document.createElement('a');
-        tokenLink.href = token.url || '#';
-        tokenLink.target = '_blank';
-        tokenLink.innerText = 'Official Website';
+        // Buy Token Link
+        const buyTokenLink = document.createElement('a');
+        buyTokenLink.href = token.url || '#';
+        buyTokenLink.target = '_blank';
+        buyTokenLink.innerText = 'BUY TOKEN';
 
-        // Token linklerini al ve ekle
-        if (token.links && Array.isArray(token.links)) {
-            token.links.forEach(link => {
-                const linkElement = document.createElement('a');
-                linkElement.href = link.url || '#';
-                linkElement.target = '_blank';
-                linkElement.innerText = link.label.charAt(0).toUpperCase() + link.label.slice(1);
-                tokenInfo.appendChild(linkElement);
-            });
-        }
+        // Token adresi üzerine gelindiğinde kopyalama butonu göster
+        const copyButton = document.createElement('span');
+        copyButton.classList.add('copy-button');
+        copyButton.innerText = 'Copy';
+        copyButton.onclick = () => copyToClipboard(token.tokenAddress);
 
-        // Token bilgilerini ekle
+        // Token bilgilerini bir arada tut
         tokenInfo.appendChild(tokenName);
         tokenInfo.appendChild(tokenDescription);
         tokenInfo.appendChild(chainId);
         tokenInfo.appendChild(tokenAddress);
-        tokenInfo.appendChild(tokenLink);
+        tokenInfo.appendChild(buyTokenLink);
 
-        // Token kartını tamamla ve sayfada göster
         tokenCard.appendChild(tokenIcon);
         tokenCard.appendChild(tokenInfo);
+        tokenCard.appendChild(copyButton);
 
-        // Token kartını ekleyin
         tokenList.appendChild(tokenCard);
     });
-
-    // Sayfalama için indeks artırma
-    currentTokenIndex += 20;
 }
 
-// API verilerini saniyede 1 kez alıyoruz (60 kez bir dakika içinde)
-setInterval(fetchTokenProfiles, 1000); // 1000 ms, yani 1 saniye
+// Token adresini kopyala
+function copyToClipboard(address) {
+    const el = document.createElement('textarea');
+    el.value = address;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    alert('Token Address copied!');
+}
 
-// Sayfa yüklendiğinde hemen API verilerini çek
-fetchTokenProfiles();
-
-// Sayfada aşağı kaydırma olduğunda yeni token'ları yükleme
-window.addEventListener('scroll', function() {
+// Sayfada yeni tokenlar eklendikçe, scroll ile daha fazla yükleyebilmek için
+function handleScroll() {
     const scrollPosition = window.innerHeight + window.scrollY;
     const pageHeight = document.documentElement.scrollHeight;
 
+    // Sayfanın altına gelindiğinde yeni tokenları yükle
     if (scrollPosition >= pageHeight - 10) {
-        // Eğer sayfa sonuna geldiysek yeni token'ları göster
-        displayTokenProfiles();
+        currentTokenIndex += 20;
+
+        // Eğer gösterilecek daha fazla token varsa, ekle
+        if (currentTokenIndex < tokenData.length) {
+            displayTokenProfiles();
+        } else {
+            console.log('Gösterilecek başka token yok.');
+        }
     }
-});
+}
+
+// Sayfa her saniye token verisi çekecek şekilde ayarla (dakikada 60 istek)
+setInterval(fetchTokenProfiles, 1000);
+
+// İlk başta token verilerini çek
+fetchTokenProfiles();
+
+// Sayfa kaydırıldığında daha fazla token yükle
+window.addEventListener('scroll', handleScroll);
