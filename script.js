@@ -6,10 +6,13 @@ async function fetchTokenProfiles() {
             headers: {},
         });
 
-        // API'den gelen veriyi konsola yazdır
         const data = await response.json();
         console.log(data); // Burada gelen veriyi kontrol edebilirsiniz
-        displayTokenProfiles(data);
+
+        // Son N token'ı göster
+        const N = 5;  // Son 5 token'ı göstermek için
+        const lastTokens = data.slice(-N); // Son 5 token
+        displayTokenProfiles(lastTokens);
     } catch (error) {
         console.error("Veri alınırken bir hata oluştu:", error);
     }
