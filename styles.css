@@ -29,9 +29,9 @@ header p {
     color: #4CAF50;
     text-decoration: none;
     font-size: 1.2em;
-    position: absolute;
-    top: 20px;
-    left: 20px;
+    margin-bottom: 15px;
+    display: inline-block;
+    font-weight: bold;
 }
 
 /* Token listesi */
