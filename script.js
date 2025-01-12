@@ -10,10 +10,15 @@ async function fetchTokenProfiles() {
         });
 
         const data = await response.json();
-        console.log(data); // Log the fetched data to inspect it
+        console.log('Fetched data:', data); // Log the fetched data to inspect it
 
-        // Add new tokens to the global tokenData array
-        tokenData = [...tokenData, ...data]; 
+        // Check if data is valid and contains tokens
+        if (data && Array.isArray(data)) {
+            // Add new tokens to the global tokenData array
+            tokenData = [...tokenData, ...data]; 
+        } else {
+            console.error('No token data received or data format is incorrect');
+        }
 
         // Display the latest tokens
         displayTokenProfiles();
@@ -25,7 +30,7 @@ async function fetchTokenProfiles() {
 // Display the latest tokens on the page
 function displayTokenProfiles() {
     const tokenList = document.getElementById('token-list');
-
+    
     // Add a slight delay and smooth transition for new token addition
     tokenList.style.transition = 'all 0.5s ease-in-out';
     
@@ -34,7 +39,7 @@ function displayTokenProfiles() {
     tokensToShow.forEach(token => {
         const tokenCard = document.createElement('div');
         tokenCard.classList.add('token-card');
-
+        
         // Token icon
         const tokenIcon = document.createElement('img');
         tokenIcon.src = token.icon || 'default-icon.png'; // Default icon if not available
@@ -74,7 +79,7 @@ function displayTokenProfiles() {
         // Append the card to the token list
         tokenList.appendChild(tokenCard);
     });
-    
+
     // Update the index to show the next batch of tokens
     currentTokenIndex += 20;
 }
