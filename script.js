@@ -9,10 +9,8 @@ async function fetchTokenProfiles() {
         const data = await response.json();
         console.log(data); // Burada gelen veriyi kontrol edebilirsiniz
 
-        // Son N token'ı göster
-        const N = 5;  // Son 5 token'ı göstermek için
-        const lastTokens = data.slice(-N); // Son 5 token
-        displayTokenProfiles(lastTokens);
+        // Yeni token'ları sayfaya ekle
+        displayTokenProfiles(data);
     } catch (error) {
         console.error("Veri alınırken bir hata oluştu:", error);
     }
@@ -22,7 +20,6 @@ async function fetchTokenProfiles() {
 function displayTokenProfiles(data) {
     const tokenList = document.getElementById('token-list');
     
-    // API'den gelen verinin geçerli olup olmadığını kontrol et
     if (Array.isArray(data)) {
         data.forEach(token => {
             const tokenCard = document.createElement('div');
@@ -52,13 +49,17 @@ function displayTokenProfiles(data) {
             
             tokenCard.appendChild(tokenIcon);
             tokenCard.appendChild(tokenInfo);
-            
-            tokenList.appendChild(tokenCard);
+
+            // Yeni token'ı listenin başına ekle
+            tokenList.insertBefore(tokenCard, tokenList.firstChild);
         });
     } else {
         console.error('Beklenen veri formatı alınamadı.');
     }
 }
 
-// İlk token profilini getir
+// Periyodik olarak veriyi al ve sayfaya ekle
+setInterval(fetchTokenProfiles, 1000); // Her 1 saniyede bir veri al (dakikada 60 kez)
+
+// İlk token'ları hemen al ve sayfada göster
 fetchTokenProfiles();
