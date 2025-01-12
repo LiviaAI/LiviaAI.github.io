@@ -1,7 +1,7 @@
-let tokenData = []; // All fetched token data
-let currentTokenIndex = 0; // Track the index for pagination
+let tokenData = []; // Tüm token verileri
+let currentTokenIndex = 0; // Sayfalama için indeks takip
 
-// Fetch token profile data from API
+// API'den token profil verilerini alıyoruz
 async function fetchTokenProfiles() {
     try {
         const response = await fetch('https://api.dexscreener.com/token-profiles/latest/v1', {
@@ -10,94 +10,106 @@ async function fetchTokenProfiles() {
         });
 
         const data = await response.json();
-        console.log('Fetched data:', data); // Log the fetched data to inspect it
+        console.log('Fetched data:', data); // API'den gelen veriyi konsola yazdırıyoruz
 
-        // Check if data is valid and contains tokens
+        // Eğer veri gelirse, token verilerini diziye ekle
         if (data && Array.isArray(data)) {
-            // Add new tokens to the global tokenData array
-            tokenData = [...tokenData, ...data]; 
+            tokenData = [...tokenData, ...data]; // Yeni token verilerini ekle
+            displayTokenProfiles(); // Veriyi sayfada göster
         } else {
-            console.error('No token data received or data format is incorrect');
+            console.error('Token verisi alınamadı veya veri formatı yanlış');
         }
-
-        // Display the latest tokens
-        displayTokenProfiles();
     } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("API hatası:", error);
     }
 }
 
-// Display the latest tokens on the page
+// Sayfada token'ları gösterme
 function displayTokenProfiles() {
     const tokenList = document.getElementById('token-list');
     
-    // Add a slight delay and smooth transition for new token addition
-    tokenList.style.transition = 'all 0.5s ease-in-out';
-    
-    // Slice the token data to show only the latest 20 tokens
+    // Her seferinde token-list içeriğini temizle (yeni veri eklenirken eski veriyi sil)
+    tokenList.innerHTML = '';
+
+    // En son 20 token'i göster
     const tokensToShow = tokenData.slice(currentTokenIndex, currentTokenIndex + 20);
     tokensToShow.forEach(token => {
         const tokenCard = document.createElement('div');
         tokenCard.classList.add('token-card');
-        
-        // Token icon
+
+        // Token ikonu
         const tokenIcon = document.createElement('img');
-        tokenIcon.src = token.icon || 'default-icon.png'; // Default icon if not available
+        tokenIcon.src = token.icon || 'default-icon.png'; // Varsayılan bir ikon kullan
         tokenIcon.alt = 'Token Icon';
 
-        // Token details
+        // Token detayları
         const tokenInfo = document.createElement('div');
+        
+        // Token adı
         const tokenName = document.createElement('h3');
         tokenName.innerText = token.tokenAddress || 'Token Address Unavailable';
+
+        // Token açıklaması
         const tokenDescription = document.createElement('p');
         tokenDescription.innerText = token.description || 'No description available.';
-
-        // Show chainId, tokenAddress and other details
+        
+        // Chain ID ve token adresi
         const chainId = document.createElement('p');
         chainId.innerText = `Chain: ${token.chainId ? token.chainId.toUpperCase() : 'N/A'}`;
-
+        
         const tokenAddress = document.createElement('p');
         tokenAddress.innerText = `Token Address: ${token.tokenAddress || 'N/A'}`;
-        tokenAddress.classList.add('token-address'); // Adding a class for styling
+        tokenAddress.classList.add('token-address'); // Kopyalama için class ekliyoruz
 
-        // Link to token details (if exists)
+        // Token linki (buy token vs.)
         const tokenLink = document.createElement('a');
         tokenLink.href = token.url || '#';
         tokenLink.target = '_blank';
         tokenLink.innerText = 'Official Website';
 
-        // Append elements to tokenCard
+        // Token linklerini al ve ekle
+        if (token.links && Array.isArray(token.links)) {
+            token.links.forEach(link => {
+                const linkElement = document.createElement('a');
+                linkElement.href = link.url || '#';
+                linkElement.target = '_blank';
+                linkElement.innerText = link.label.charAt(0).toUpperCase() + link.label.slice(1);
+                tokenInfo.appendChild(linkElement);
+            });
+        }
+
+        // Token bilgilerini ekle
         tokenInfo.appendChild(tokenName);
         tokenInfo.appendChild(tokenDescription);
         tokenInfo.appendChild(chainId);
         tokenInfo.appendChild(tokenAddress);
         tokenInfo.appendChild(tokenLink);
 
+        // Token kartını tamamla ve sayfada göster
         tokenCard.appendChild(tokenIcon);
         tokenCard.appendChild(tokenInfo);
 
-        // Append the card to the token list
+        // Token kartını ekleyin
         tokenList.appendChild(tokenCard);
     });
 
-    // Update the index to show the next batch of tokens
+    // Sayfalama için indeks artırma
     currentTokenIndex += 20;
 }
 
-// Periodically fetch and update token profiles every 1 second (60 times per minute)
-setInterval(fetchTokenProfiles, 1000); // Changed to 1 second interval
+// API verilerini saniyede 1 kez alıyoruz (60 kez bir dakika içinde)
+setInterval(fetchTokenProfiles, 1000); // 1000 ms, yani 1 saniye
 
-// Initially fetch token profiles
+// Sayfa yüklendiğinde hemen API verilerini çek
 fetchTokenProfiles();
 
-// Smooth scrolling and animation for adding new tokens
+// Sayfada aşağı kaydırma olduğunda yeni token'ları yükleme
 window.addEventListener('scroll', function() {
     const scrollPosition = window.innerHeight + window.scrollY;
     const pageHeight = document.documentElement.scrollHeight;
 
-    // If we're at the bottom of the page, load more tokens
     if (scrollPosition >= pageHeight - 10) {
-        // Load more tokens by triggering the display function
+        // Eğer sayfa sonuna geldiysek yeni token'ları göster
         displayTokenProfiles();
     }
 });
