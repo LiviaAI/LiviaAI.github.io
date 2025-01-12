@@ -24,23 +24,14 @@ header p {
     font-size: 1.1em;
 }
 
-/* Buy Token Link */
-.buy-token {
-    color: #4CAF50;
-    text-decoration: none;
-    font-size: 1.2em;
-    margin-bottom: 15px;
-    display: inline-block;
-    font-weight: bold;
-}
-
 /* Token listesi */
 .token-list {
-    display: block;  /* Flex yerine block, grid vb. kullanılabilir */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 20px;
 }
 
-/* Token kartları */
 .token-card {
     display: flex;
     flex-direction: row;
@@ -53,10 +44,8 @@ header p {
     color: white;
     opacity: 0;
     animation: fadeIn 0.5s forwards;
-    transition: all 0.3s ease-in-out;
 }
 
-/* Token kartı resmi */
 .token-card img {
     width: 60px;
     height: 60px;
@@ -64,7 +53,6 @@ header p {
     margin-right: 20px;
 }
 
-/* Token bilgileri */
 .token-info {
     display: flex;
     flex-direction: column;
@@ -83,14 +71,12 @@ header p {
     text-decoration: underline;
 }
 
-/* Kopyalama butonu */
 .copy-button {
+    display: none;
     color: #4CAF50;
     cursor: pointer;
-    display: none;
 }
 
-/* Token address hover'da kopyalama butonu görünür */
 .token-address-container:hover .copy-button {
     display: inline;
 }
