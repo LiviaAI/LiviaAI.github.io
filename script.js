@@ -31,19 +31,31 @@ async function fetchTokenSymbol(url) {
         const parser = new DOMParser();
         const doc = parser.parseFromString(text, 'text/html');
 
-        // "chakra-heading custom" sınıfına sahip bir öğe arıyoruz
-        const headingElement = doc.querySelector('[class*="chakra-heading custom"]');
-        
-        if (headingElement) {
-            // Title bilgisini alıyoruz
-            const tokenSymbol = headingElement.getAttribute('title');
-            return tokenSymbol || 'N/A'; // Eğer title yoksa 'N/A' döndür
-        } else {
-            return 'N/A'; // Eğer token symbol bulunamazsa
+        // "style='overflow-anchor: none;'" olan div'leri buluyoruz
+        const targetDivs = doc.querySelectorAll('div[style="overflow-anchor: none;"]');
+
+        for (let div of targetDivs) {
+            // Bu div'ler içinde "chakra-heading" ifadesi geçen öğeleri arıyoruz
+            const headingElements = div.querySelectorAll('[class*="chakra-heading"]');
+
+            for (let headingElement of headingElements) {
+                // Eğer başlık öğesi varsa ve title özelliğini içeriyorsa
+                const titleAttribute = headingElement.querySelector('[title]');
+
+                if (titleAttribute && titleAttribute.getAttribute('title')) {
+                    const tokenSymbol = titleAttribute.getAttribute('title');
+                    return tokenSymbol;  // Token symbol'ü bulduğumuzda döndürüyoruz
+                }
+            }
         }
+
+        // Eğer token symbol bulunmazsa
+        console.warn("Token symbol not found on page:", url);
+        return 'N/A';
+
     } catch (error) {
         console.error("Sayfa içeriği alınırken hata oluştu:", error);
-        return 'N/A';
+        return 'N/A'; // Hata olursa 'N/A' döndürüyoruz
     }
 }
 
