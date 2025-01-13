@@ -7,8 +7,12 @@ async function fetchTokenProfiles() {
         const response = await fetch('https://api.dexscreener.com/token-profiles/latest/v1');
         const data = await response.json();
 
-        // Verileri tokenData dizisine ekle
-        tokenData = [...tokenData, ...data];
+        // Token verilerini ekle, yalnızca yeni tokenları ekleyelim
+        data.forEach(newToken => {
+            if (!tokenData.some(existingToken => existingToken.tokenAddress === newToken.tokenAddress)) {
+                tokenData.push(newToken);  // Yeni token'ı ekle
+            }
+        });
 
         // Token'ları ekranda göster
         displayTokenProfiles();
@@ -72,8 +76,8 @@ function displayTokenProfiles() {
         tokenCard.appendChild(tokenInfo);
         tokenCard.appendChild(copyButton);
 
-        // Yeni token'ı sadece üst kısma ekle
-        tokenList.insertBefore(tokenCard, tokenList.firstChild);  // Yeni token'ı üstte ekle
+        // Yeni token'ı listenin başına ekle
+        tokenList.prepend(tokenCard);  // Yeni token'ı başta ekle
     });
 
     // Sayfa her token eklendiğinde currentTokenIndex'i arttır
