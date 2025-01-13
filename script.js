@@ -21,14 +21,13 @@ async function fetchTokenProfiles() {
 function displayTokenProfiles() {
     const tokenList = document.getElementById('token-list');
 
-    // Listeden eski tokenları temizle (scrolling ile yeni eklenen tokenlar için)
-    tokenList.innerHTML = '';
-
     // Son 20 token'ı al ve göster
-    const tokensToShow = tokenData.slice(currentTokenIndex, currentTokenIndex + 20);
+    const tokensToShow = tokenData.slice(currentTokenIndex, currentTokenIndex + 1);  // Yalnızca 1 token alıyoruz, daha fazla almak istemiyoruz
+
     tokensToShow.forEach(token => {
         const tokenCard = document.createElement('div');
         tokenCard.classList.add('token-card');
+        tokenCard.style.animation = "fadeIn 0.5s forwards";  // Animasyon ekle
 
         // Token ikonu
         const tokenIcon = document.createElement('img');
@@ -73,8 +72,12 @@ function displayTokenProfiles() {
         tokenCard.appendChild(tokenInfo);
         tokenCard.appendChild(copyButton);
 
-        tokenList.appendChild(tokenCard);
+        // Yeni token eklenince animasyon uygulanacak ve yukarı kayacak
+        tokenList.insertBefore(tokenCard, tokenList.firstChild);  // Yeni token'ı üstte ekle
     });
+
+    // Sayfa her token eklendiğinde currentTokenIndex'i arttır
+    currentTokenIndex++;
 }
 
 // Token adresini kopyala
@@ -99,7 +102,7 @@ function handleScroll() {
 
     // Sayfanın altına gelindiğinde yeni tokenları yükle
     if (scrollPosition >= pageHeight - 10) {
-        currentTokenIndex += 20;
+        currentTokenIndex += 1;
 
         // Eğer gösterilecek daha fazla token varsa, ekle
         if (currentTokenIndex < tokenData.length) {
