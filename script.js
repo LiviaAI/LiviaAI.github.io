@@ -22,7 +22,7 @@ function displayTokenProfiles() {
     const tokenList = document.getElementById('token-list');
 
     // Son 1 token'ı al ve göster
-    const tokensToShow = tokenData.slice(currentTokenIndex, currentTokenIndex + 1);  // Yalnızca 1 token alıyoruz, daha fazla almak istemiyoruz
+    const tokensToShow = tokenData.slice(currentTokenIndex, currentTokenIndex + 1);  // Yalnızca 1 token alıyoruz
 
     tokensToShow.forEach(token => {
         const tokenCard = document.createElement('div');
