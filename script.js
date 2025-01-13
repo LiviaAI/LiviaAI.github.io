@@ -1,7 +1,7 @@
 let tokenData = []; // Token verileri burada tutulacak
 
-// API'den sadece en son token'ı alıyoruz
-async function fetchTokenProfiles() {
+// Sayfa yüklendiğinde son 10 token'ı al
+async function fetchInitialTokenProfiles() {
     try {
         const response = await fetch('https://api.dexscreener.com/token-profiles/latest/v1', {
             method: 'GET',
@@ -9,11 +9,10 @@ async function fetchTokenProfiles() {
         });
 
         const data = await response.json();
-
-        // Yeni gelen token'ı alıyoruz ve en başa ekliyoruz
+        
+        // Son 10 token'ı sayfada göster
         if (data && data.length > 0) {
-            const newToken = data[0]; // En son token
-            tokenData.unshift(newToken); // Yeni token en üste ekleniyor
+            tokenData = data.slice(0, 10); // Son 10 token
             displayTokenProfiles(); // Tokenları görüntüle
         }
 
@@ -26,7 +25,7 @@ async function fetchTokenProfiles() {
 function displayTokenProfiles() {
     const tokenList = document.getElementById('token-list');
 
-    // Listemizi temizliyoruz, böylece her yeni sorgu sonrası eski veriler silinir
+    // Listemizi temizliyoruz
     tokenList.innerHTML = '';
 
     // Token verilerinin her birini ekleyelim
@@ -87,8 +86,34 @@ function displayTokenProfiles() {
     });
 }
 
-// Sayfa yüklendikçe veri sorgulamak için interval
-setInterval(fetchTokenProfiles, 1000);
+// Yeni token'ı kontrol et ve sayfada daha önce yoksa ekle
+async function checkNewToken() {
+    try {
+        const response = await fetch('https://api.dexscreener.com/token-profiles/latest/v1', {
+            method: 'GET',
+            headers: {},
+        });
 
-// Başlangıçta token profillerini çekiyoruz
-fetchTokenProfiles();
+        const data = await response.json();
+
+        // En son gelen token
+        const newToken = data[0];
+
+        // Yeni token daha önce eklenmiş mi?
+        const tokenExists = tokenData.some(token => token.tokenAddress === newToken.tokenAddress);
+        
+        // Eğer yeni token daha önce eklenmemişse, ekle
+        if (!tokenExists) {
+            tokenData.unshift(newToken); // En üstte ekle
+            displayTokenProfiles(); // Tokenları tekrar göster
+        }
+    } catch (error) {
+        console.error("API hatası:", error);
+    }
+}
+
+// İlk başta son 10 token'ı çek
+fetchInitialTokenProfiles();
+
+// Her saniye yeni token'ları kontrol et
+setInterval(checkNewToken, 1000);
