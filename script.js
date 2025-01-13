@@ -21,7 +21,7 @@ async function fetchTokenProfiles() {
 function displayTokenProfiles() {
     const tokenList = document.getElementById('token-list');
 
-    // Son 20 token'ı al ve göster
+    // Son 1 token'ı al ve göster
     const tokensToShow = tokenData.slice(currentTokenIndex, currentTokenIndex + 1);  // Yalnızca 1 token alıyoruz, daha fazla almak istemiyoruz
 
     tokensToShow.forEach(token => {
@@ -72,7 +72,7 @@ function displayTokenProfiles() {
         tokenCard.appendChild(tokenInfo);
         tokenCard.appendChild(copyButton);
 
-        // Yeni token eklenince animasyon uygulanacak ve yukarı kayacak
+        // Yeni token'ı sadece üst kısma ekle
         tokenList.insertBefore(tokenCard, tokenList.firstChild);  // Yeni token'ı üstte ekle
     });
 
