@@ -76,10 +76,9 @@ async function displayTokenProfiles() {
 
         // Token bilgileri
         const tokenInfo = document.createElement('div');
-        const tokenName = document.createElement('h3');
-        tokenName.innerText = token.tokenAddress || 'Token Address Unavailable';
 
-        const tokenSymbol = document.createElement('p'); // Token Symbol
+        // Token Symbol
+        const tokenSymbol = document.createElement('p'); 
         tokenSymbol.innerText = `Token Symbol: ${await fetchTokenSymbol(token.url)}`;
 
         const tokenDescription = document.createElement('p');
@@ -112,7 +111,7 @@ async function displayTokenProfiles() {
         tokenLink.target = '_blank';
         tokenLink.innerText = 'Buy Token';
 
-        tokenInfo.appendChild(tokenName);
+        // Token bilgilerini ekliyoruz
         tokenInfo.appendChild(tokenSymbol); // Token symbol'ü ekliyoruz
         tokenInfo.appendChild(tokenDescription);
         tokenInfo.appendChild(chainId);
