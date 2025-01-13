@@ -43,6 +43,9 @@ function displayTokenProfiles() {
         const tokenName = document.createElement('h3');
         tokenName.innerText = token.tokenAddress || 'Token Address Unavailable';
 
+        const tokenSymbol = document.createElement('p'); // Token Symbol
+        tokenSymbol.innerText = `Token Symbol: ${token.symbol || 'N/A'}`;
+
         const tokenDescription = document.createElement('p');
         tokenDescription.innerText = `"${token.description || 'No description available.'}"`;
 
@@ -74,6 +77,7 @@ function displayTokenProfiles() {
         tokenLink.innerText = 'Buy Token';
 
         tokenInfo.appendChild(tokenName);
+        tokenInfo.appendChild(tokenSymbol); // Token symbol'ü ekliyoruz
         tokenInfo.appendChild(tokenDescription);
         tokenInfo.appendChild(chainId);
         tokenInfo.appendChild(tokenAddressContainer);
