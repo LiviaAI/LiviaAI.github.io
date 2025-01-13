@@ -1,7 +1,6 @@
-let tokenData = []; // Tüm token verilerini tutacağız
-let currentTokenIndex = 0; // Sayfalama için token index'i
+let tokenData = []; // Token verileri burada tutulacak
 
-// API'den token verilerini alıyoruz
+// API'den sadece en son token'ı alıyoruz
 async function fetchTokenProfiles() {
     try {
         const response = await fetch('https://api.dexscreener.com/token-profiles/latest/v1', {
@@ -10,13 +9,14 @@ async function fetchTokenProfiles() {
         });
 
         const data = await response.json();
-        console.log(data); // Gelen veriyi kontrol ediyoruz
 
-        // Yeni token'ları global tokenData dizisine ekliyoruz
-        tokenData = [...data, ...tokenData]; // Yeni token'lar en üstte olacak şekilde ekleniyor
+        // Yeni gelen token'ı alıyoruz ve en başa ekliyoruz
+        if (data && data.length > 0) {
+            const newToken = data[0]; // En son token
+            tokenData.unshift(newToken); // Yeni token en üste ekleniyor
+            displayTokenProfiles(); // Tokenları görüntüle
+        }
 
-        // Token'ları görüntüle
-        displayTokenProfiles();
     } catch (error) {
         console.error("API hatası:", error);
     }
