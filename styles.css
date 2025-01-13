@@ -44,6 +44,7 @@ header p {
     color: white;
     opacity: 0;
     animation: fadeIn 0.5s forwards;
+    transition: transform 0.3s ease-in-out;
 }
 
 .token-card img {
@@ -81,21 +82,31 @@ header p {
     display: inline;
 }
 
-/* Footer */
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #1e1e1e;
-}
-
 /* Animasyon */
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(10px); /* İlk başta hafif aşağıda olsun */
+        transform: translateY(10px);
     }
     to {
         opacity: 1;
-        transform: translateY(0); /* Sonra yerine otursun */
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+    .token-card {
+        flex-direction: column;
+        width: 90%;
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 2em;
+    }
+
+    header p {
+        font-size: 1em;
     }
 }
