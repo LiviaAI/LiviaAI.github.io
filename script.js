@@ -21,15 +21,39 @@ async function fetchInitialTokenProfiles() {
     }
 }
 
-// Token'ları sayfada göster
-function displayTokenProfiles() {
-    const tokenList = document.getElementById('token-list');
+// Token URL'lerinden "Token Symbol" almak için fonksiyon
+async function fetchTokenSymbol(url) {
+    try {
+        const response = await fetch(url);
+        const text = await response.text();
+        
+        // Sayfa içeriğini bir DOM'a çeviriyoruz
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(text, 'text/html');
 
-    // Listemizi temizliyoruz
-    tokenList.innerHTML = '';
+        // "chakra-heading custom" sınıfına sahip bir öğe arıyoruz
+        const headingElement = doc.querySelector('[class*="chakra-heading custom"]');
+        
+        if (headingElement) {
+            // Title bilgisini alıyoruz
+            const tokenSymbol = headingElement.getAttribute('title');
+            return tokenSymbol || 'N/A'; // Eğer title yoksa 'N/A' döndür
+        } else {
+            return 'N/A'; // Eğer token symbol bulunamazsa
+        }
+    } catch (error) {
+        console.error("Sayfa içeriği alınırken hata oluştu:", error);
+        return 'N/A';
+    }
+}
+
+// Token'ları sayfada göster
+async function displayTokenProfiles() {
+    const tokenList = document.getElementById('token-list');
+    tokenList.innerHTML = ''; // Listemizi temizliyoruz
 
     // Token verilerinin her birini ekleyelim
-    tokenData.forEach(token => {
+    for (const token of tokenData) {
         const tokenCard = document.createElement('div');
         tokenCard.classList.add('token-card');
 
@@ -44,7 +68,7 @@ function displayTokenProfiles() {
         tokenName.innerText = token.tokenAddress || 'Token Address Unavailable';
 
         const tokenSymbol = document.createElement('p'); // Token Symbol
-        tokenSymbol.innerText = `Token Symbol: ${token.symbol || 'N/A'}`;
+        tokenSymbol.innerText = `Token Symbol: ${await fetchTokenSymbol(token.url)}`;
 
         const tokenDescription = document.createElement('p');
         tokenDescription.innerText = `"${token.description || 'No description available.'}"`;
@@ -87,7 +111,7 @@ function displayTokenProfiles() {
         tokenCard.appendChild(tokenInfo);
 
         tokenList.appendChild(tokenCard);
-    });
+    }
 }
 
 // Yeni token'ı kontrol et ve sayfada daha önce yoksa ekle
