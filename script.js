@@ -4,10 +4,11 @@ let currentTokenIndex = 0; // Sayfalama için indeks
 // Token profil verilerini API'den al
 async function fetchTokenProfiles() {
     try {
+        // API'den 20 token çek
         const response = await fetch('https://api.dexscreener.com/token-profiles/latest/v1');
         const data = await response.json();
 
-        // Token verilerini ekle, yalnızca yeni tokenları ekleyelim
+        // Token'ları eklerken, daha önce eklenmiş olanlardan tekrarlamamak için filtrele
         data.forEach(newToken => {
             if (!tokenData.some(existingToken => existingToken.tokenAddress === newToken.tokenAddress)) {
                 tokenData.push(newToken);  // Yeni token'ı ekle
@@ -25,8 +26,8 @@ async function fetchTokenProfiles() {
 function displayTokenProfiles() {
     const tokenList = document.getElementById('token-list');
 
-    // Son 1 token'ı al ve göster
-    const tokensToShow = tokenData.slice(currentTokenIndex, currentTokenIndex + 1);  // Yalnızca 1 token alıyoruz
+    // Sayfa her 20 token sorgusu sonunda, token'ları güncelle
+    const tokensToShow = tokenData.slice(currentTokenIndex, currentTokenIndex + 20);  // 20 token göster
 
     tokensToShow.forEach(token => {
         const tokenCard = document.createElement('div');
@@ -77,11 +78,11 @@ function displayTokenProfiles() {
         tokenCard.appendChild(copyButton);
 
         // Yeni token'ı listenin başına ekle
-        tokenList.prepend(tokenCard);  // Yeni token'ı başta ekle
+        tokenList.appendChild(tokenCard);  // Yeni token'ı sona ekle
     });
 
     // Sayfa her token eklendiğinde currentTokenIndex'i arttır
-    currentTokenIndex++;
+    currentTokenIndex += tokensToShow.length;
 }
 
 // Token adresini kopyala
@@ -106,11 +107,9 @@ function handleScroll() {
 
     // Sayfanın altına gelindiğinde yeni tokenları yükle
     if (scrollPosition >= pageHeight - 10) {
-        currentTokenIndex += 1;
-
-        // Eğer gösterilecek daha fazla token varsa, ekle
+        // Sayfada yeni tokenlar var mı?
         if (currentTokenIndex < tokenData.length) {
-            displayTokenProfiles();
+            displayTokenProfiles();  // Yeni tokenları göster
         } else {
             console.log('Gösterilecek başka token yok.');
         }
