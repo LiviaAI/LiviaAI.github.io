@@ -91,27 +91,30 @@ header p {
     font-size: 14px;
 }
 
-/* Token Description */
-.token-description {
-    font-style: italic;
-    color: #aaa;
-    margin-top: 20px;
-}
-
-/* Token linkleri */
-.token-info a {
-    color: #4CAF50;
+/* Buy Token Butonu */
+.token-buy-btn {
+    background-color: #3498db; /* Mavi renk */
+    color: white;
     text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 1.2em;
     font-weight: bold;
-    padding: 8px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-top: 20px;
+    text-align: center;
+    display: block;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.token-info a:hover {
-    background-color: #4CAF50;
-    color: #121212;
+.token-buy-btn:hover {
+    background-color: #2980b9; /* Hover rengini koyu mavi yap */
+    transform: translateY(-5px);
 }
+
+.token-buy-btn:active {
+    transform: translateY(2px);
+}
+
 
 /* Copy butonu */
 .copy-button {
