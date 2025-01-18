@@ -1,4 +1,4 @@
-/* Genel sayfa stili */
+/* Genel Sayfa Stili */
 body {
     font-family: 'Roboto', Arial, sans-serif;
     background-color: #121212; /* Koyu arka plan */
@@ -51,7 +51,7 @@ main {
     margin: 0 auto;
 }
 
-/* Token kartı */
+/* Token Kartı */
 .token-card {
     display: flex;
     flex-direction: row;
@@ -94,13 +94,13 @@ main {
 /* Token Address Container */
 .token-address-container {
     display: flex;
+    flex-wrap: wrap; /* Mobilde metnin taşmasını engellemek için satır kaydırma */
     justify-content: space-between;
     align-items: center;
     word-wrap: break-word; /* Uzun metinlerin taşmasını engeller */
     overflow-wrap: break-word; /* Kırılmasını sağlar */
     max-width: 100%;
     margin-bottom: 10px;
-    word-break: break-all; /* Eğer kelime uzun olursa, kelimenin tamamını böler */
 }
 
 /* Token Address */
@@ -110,13 +110,12 @@ main {
     overflow-wrap: break-word;
     max-width: 100%;
     text-overflow: ellipsis; /* Taşan metni ... ile keser */
-    white-space: nowrap; /* Metnin tek satırda kalmasını sağlar */
+    white-space: normal; /* Satır başı yapmasına izin verir */
     display: inline-block;
     overflow: hidden;
     width: 100%; /* Genişliği yüzde 100 yaparak tam kapsama sağlar */
     word-break: break-all; /* Adres çok uzun ise kelimeyi bölüp satır sonunda taşmasını engeller */
 }
-
 
 /* Token Description */
 .token-description {
@@ -126,7 +125,7 @@ main {
     font-size: 1.1em;
 }
 
-/* Copy butonu */
+/* Copy Butonu */
 .copy-button {
     display: none;
     color: #4CAF50; /* Yeşil renk */
@@ -172,7 +171,7 @@ main {
     }
 }
 
-/* Responsive Tasarım */
+/* Responsive Tasarım (Mobil Uyumluluk) */
 @media (max-width: 768px) {
     header h1 {
         font-size: 2.5em;
@@ -197,15 +196,23 @@ main {
 
     .token-address {
         font-size: 12px; /* Küçük ekranlarda daha küçük font */
-        white-space: normal;
+        white-space: normal; /* Metnin taşmaması için satır başı yapmasına izin veririz */
     }
 
     .token-info p {
         font-size: 1em; /* Küçük ekranlarda daha küçük font */
     }
+
+    /* Token Address Container Mobilde Daha Esnek */
     .token-address-container {
         flex-direction: column; /* Mobilde dikey hizalama */
         align-items: flex-start; /* Soldan hizalar */
+        word-wrap: break-word;
+    }
+
+    .token-address {
+        font-size: 12px; /* Küçük ekranlarda daha küçük font */
+        word-break: break-all; /* Adresin çok uzun olduğu durumlarda kelimeyi bölüp taşmasını engeller */
     }
 }
 
