@@ -1,4 +1,4 @@
-/* Genel Sayfa Stili */
+/* Genel sayfa stili */
 body {
     font-family: 'Roboto', Arial, sans-serif;
     background-color: #121212; /* Koyu arka plan */
@@ -14,20 +14,20 @@ body {
 /* Header kısmı */
 header {
     text-align: center;
-    padding: 40px;
+    padding: 5% 0;
     background-color: #1e1e1e; /* Koyu başlık arka planı */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    margin-bottom: 30px;
+    margin-bottom: 5%;
 }
 
 header h1 {
-    font-size: 3em;
+    font-size: 5vw; /* Ekran genişliğine göre ayarlama */
     margin: 0;
     color: #8a2be2; /* Mor renk başlık için */
 }
 
 header p {
-    font-size: 1.2em;
+    font-size: 2vw; /* Ekran genişliğine göre ayarlama */
     color: #bbb; /* Açık gri renk metin için */
 }
 
@@ -37,34 +37,36 @@ main {
     justify-content: center;
     align-items: center;
     flex: 1;
-    padding: 20px;
+    padding: 5%;
     width: 100%;
 }
 
 /* Token listesi */
 .token-list {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap; /* Satıra sığmayan öğeleri alt satıra taşır */
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px; /* Kartlar arasındaki boşluk */
     width: 100%;
     max-width: 1200px; /* Maksimum genişlik */
     margin: 0 auto;
 }
 
-/* Token Kartı */
+/* Token kartı */
 .token-card {
     display: flex;
     flex-direction: row;
     background-color: #2e2e2e; /* Koyu gri arka plan */
-    margin: 15px;
-    padding: 20px;
+    padding: 5%;
     border-radius: 12px;
-    width: 80%;
-    max-width: 1200px;
     color: white;
     opacity: 0;
     animation: fadeIn 0.6s forwards;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 500px; /* Kartların maksimum genişliği */
+    flex: 1 1 30%; /* Kartların otomatik olarak boyutlanmasını sağlar */
 }
 
 .token-card:hover {
@@ -72,10 +74,10 @@ main {
 }
 
 .token-card img {
-    width: 80px;
-    height: 80px;
+    width: 15vw; /* Genişlik ekranın %15'i kadar */
+    height: auto; /* Yükseklik oranını korur */
     border-radius: 50%;
-    margin-right: 20px;
+    margin-right: 5%;
     transition: transform 0.3s ease;
 }
 
@@ -94,27 +96,25 @@ main {
 /* Token Address Container */
 .token-address-container {
     display: flex;
-    flex-wrap: wrap; /* Mobilde metnin taşmasını engellemek için satır kaydırma */
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     word-wrap: break-word; /* Uzun metinlerin taşmasını engeller */
     overflow-wrap: break-word; /* Kırılmasını sağlar */
     max-width: 100%;
     margin-bottom: 10px;
+    word-break: break-word; /* Kelimenin tamamını böler */
 }
 
 /* Token Address */
 .token-address {
-    font-size: 14px;
+    font-size: 4vw; /* Ekran genişliğine göre ayarlama */
     word-wrap: break-word;
     overflow-wrap: break-word;
     max-width: 100%;
-    text-overflow: ellipsis; /* Taşan metni ... ile keser */
-    white-space: normal; /* Satır başı yapmasına izin verir */
+    text-overflow: ellipsis;
+    white-space: nowrap; /* Metnin tek satırda kalmasını sağlar */
     display: inline-block;
     overflow: hidden;
-    width: 100%; /* Genişliği yüzde 100 yaparak tam kapsama sağlar */
-    word-break: break-all; /* Adres çok uzun ise kelimeyi bölüp satır sonunda taşmasını engeller */
+    word-break: break-all;
 }
 
 /* Token Description */
@@ -122,19 +122,7 @@ main {
     font-style: italic;
     color: #aaa;
     margin-top: 20px;
-    font-size: 1.1em;
-}
-
-/* Copy Butonu */
-.copy-button {
-    display: none;
-    color: #4CAF50; /* Yeşil renk */
-    cursor: pointer;
-    font-size: 1.1em;
-}
-
-.token-address-container:hover .copy-button {
-    display: inline;
+    font-size: 3vw; /* Ekran genişliğine göre ayarlama */
 }
 
 /* Buy Token Butonu */
@@ -142,11 +130,11 @@ main {
     background-color: #8a2be2; /* Mor arka plan */
     color: white;
     text-decoration: none;
-    padding: 15px 30px;
+    padding: 8% 10%;
     border-radius: 8px;
-    font-size: 1.2em;
+    font-size: 3vw; /* Ekran genişliğine göre ayarlama */
     font-weight: bold;
-    margin-top: 20px;
+    margin-top: 10%;
     text-align: center;
     display: block;
     transition: background-color 0.3s ease, transform 0.3s ease;
@@ -171,66 +159,10 @@ main {
     }
 }
 
-/* Responsive Tasarım (Mobil Uyumluluk) */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 2.5em;
-    }
-
-    header p {
-        font-size: 1em;
-    }
-
-    .token-list {
-        width: 95%;
-    }
-
-    .token-card {
-        flex-direction: column;
-    }
-
-    .token-buy-btn {
-        font-size: 1.1em;
-        padding: 12px 25px;
-    }
-
-    .token-address {
-        font-size: 12px; /* Küçük ekranlarda daha küçük font */
-        white-space: normal; /* Metnin taşmaması için satır başı yapmasına izin veririz */
-    }
-
-    .token-info p {
-        font-size: 1em; /* Küçük ekranlarda daha küçük font */
-    }
-
-    /* Token Address Container Mobilde Daha Esnek */
-    .token-address-container {
-        flex-direction: column; /* Mobilde dikey hizalama */
-        align-items: flex-start; /* Soldan hizalar */
-        word-wrap: break-word;
-    }
-
-    .token-address {
-        font-size: 12px; /* Küçük ekranlarda daha küçük font */
-        word-break: break-all; /* Adresin çok uzun olduğu durumlarda kelimeyi bölüp taşmasını engeller */
-    }
-}
-
-/* Linkler */
-a {
-    color: #8a2be2; /* Mor renk linkler için */
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-a:hover {
-    color: #9b30ff; /* Hover efektinde daha koyu mor */
-}
-
 /* Footer kısmı */
 footer {
     text-align: center;
-    padding: 20px;
+    padding: 5% 0;
     background-color: #1e1e1e;
     margin-top: auto;
 }
