@@ -90,7 +90,7 @@ async function displayTokenProfiles() {
         chainId.innerText = `Chain: ${token.chainId.toUpperCase() || 'N/A'}`;
 
         const tokenAddress = document.createElement('p');
-        tokenAddress.innerText = `Contract Address: ${token.tokenAddress || 'N/A'}`;
+        tokenAddress.innerText = `Token Address: ${token.tokenAddress || 'N/A'}`;
 
         // Copy butonu
         const copyButton = document.createElement('span');
@@ -112,14 +112,7 @@ async function displayTokenProfiles() {
         tokenLink.target = '_blank';
         tokenLink.innerText = 'Buy Token';
 
-        tokenInfo.appendChild(tokenName);
-        tokenInfo.appendChild(tokenSymbol); // Token symbol'ü ekliyoruz
-        tokenInfo.appendChild(tokenDescription);
-        tokenInfo.appendChild(chainId);
-        tokenInfo.appendChild(tokenAddressContainer);
-        tokenInfo.appendChild(tokenLink);
-
-        // Linkler kısmı
+        // Links kısmını ekleyelim (örneğin, Website, Twitter, Telegram)
         if (token.links && token.links.length > 0) {
             const linksContainer = document.createElement('div');
             linksContainer.classList.add('token-links');
@@ -131,10 +124,12 @@ async function displayTokenProfiles() {
                 linkElement.target = '_blank';
 
                 // Eğer link türü undefined ise "Visit Website" yazsın
-                if (link.type === "undefined") {
+                if (link.label === "Website") {
                     linkElement.innerText = "Visit Website";
-                } else {
-                    linkElement.innerText = `Visit ${link.type.charAt(0).toUpperCase() + link.type.slice(1)}`;
+                } else if (link.type === "twitter") {
+                    linkElement.innerText = "Visit Twitter";
+                } else if (link.type === "telegram") {
+                    linkElement.innerText = "Visit Telegram";
                 }
 
                 linksContainer.appendChild(linkElement);
@@ -150,6 +145,13 @@ async function displayTokenProfiles() {
 
             tokenInfo.appendChild(linksContainer);
         }
+
+        tokenInfo.appendChild(tokenName);
+        tokenInfo.appendChild(tokenSymbol); // Token symbol'ü ekliyoruz
+        tokenInfo.appendChild(tokenDescription);
+        tokenInfo.appendChild(chainId);
+        tokenInfo.appendChild(tokenAddressContainer);
+        tokenInfo.appendChild(tokenLink);
 
         tokenCard.appendChild(tokenIcon);
         tokenCard.appendChild(tokenInfo);
