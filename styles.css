@@ -81,15 +81,21 @@ header p {
     justify-content: space-between;
     align-items: center;
     word-wrap: break-word; /* Adresi sarmak için */
-    overflow-wrap: break-word;
+    overflow-wrap: break-word; /* Adresi sarmak için */
+    max-width: 100%; /* Adresi sınırla */
 }
 
 .token-address {
+    font-size: 14px;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    max-width: 100%; /* Adresi sınırlar */
-    font-size: 14px;
+    max-width: 100%; /* Adresi sarmak için */
+    text-overflow: ellipsis; /* Uzun metni kesip '...' ekler */
+    white-space: nowrap; /* Tek satırda gösterir */
+    display: inline-block; /* Satır içi blok olarak gösterir */
+    overflow: hidden; /* Taşan kısmı gizler */
 }
+
 
 /* Token Description */
 .token-description {
