@@ -81,6 +81,10 @@ async function displayTokenProfiles() {
         const tokenAddress = document.createElement('p');
         tokenAddress.innerText = `Token Address: ${token.tokenAddress || 'N/A'}`;
 
+        // Token Description başlığı
+        const tokenDescriptionHeader = document.createElement('p');
+        tokenDescriptionHeader.innerText = 'Token Description:';
+        
         // Token Description
         const tokenDescription = document.createElement('p');
         tokenDescription.innerText = `"${token.description || 'No description available.'}"`;
@@ -145,7 +149,8 @@ async function displayTokenProfiles() {
 
         // Token verilerini ekleyelim
         tokenInfo.appendChild(tokenAddress); // Token Address üstte
-        tokenInfo.appendChild(tokenDescription); // Token description
+        tokenInfo.appendChild(tokenDescriptionHeader); // Token Description başlığı
+        tokenInfo.appendChild(tokenDescription); // Token Description
         tokenInfo.appendChild(chainId);
         tokenInfo.appendChild(tokenAddressContainer);
         tokenInfo.appendChild(tokenLink);
