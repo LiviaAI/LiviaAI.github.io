@@ -69,6 +69,22 @@ async function displayTokenProfiles() {
         tokenInfo.appendChild(tokenAddressContainer);
         tokenInfo.appendChild(tokenLink);
 
+        // Links kısmını ekleyelim (örneğin, Twitter linki)
+        if (token.links && token.links.length > 0) {
+            const linksContainer = document.createElement('div');
+            linksContainer.classList.add('token-links');
+
+            token.links.forEach(link => {
+                const linkElement = document.createElement('a');
+                linkElement.href = link.url;
+                linkElement.target = '_blank';
+                linkElement.innerText = `Visit ${link.type}`;
+                linksContainer.appendChild(linkElement);
+            });
+
+            tokenInfo.appendChild(linksContainer);
+        }
+
         // Açıklama en alta taşındı
         const tokenDescription = document.createElement('p');
         tokenDescription.innerText = `"${token.description || 'No description available.'}"`;
