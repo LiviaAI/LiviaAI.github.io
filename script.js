@@ -41,15 +41,9 @@ async function displayTokenProfiles() {
         const tokenName = document.createElement('h3');
         tokenName.innerText = token.tokenAddress || 'Token Address Unavailable';
 
-        const tokenDescription = document.createElement('p');
-        tokenDescription.innerText = `"${token.description || 'No description available.'}"`;
-
-        // Chain Id ve tokenAddress bilgileri
+        // Chain Id bilgisi
         const chainId = document.createElement('p');
         chainId.innerText = `Chain: ${token.chainId.toUpperCase() || 'N/A'}`;
-
-        const tokenAddress = document.createElement('p');
-        tokenAddress.innerText = `Token Address: ${token.tokenAddress || 'N/A'}`;
 
         // Copy butonu
         const copyButton = document.createElement('span');
@@ -62,7 +56,6 @@ async function displayTokenProfiles() {
 
         const tokenAddressContainer = document.createElement('div');
         tokenAddressContainer.classList.add('token-address-container');
-        tokenAddressContainer.appendChild(tokenAddress);
         tokenAddressContainer.appendChild(copyButton);
 
         // Buy Token linki
@@ -72,10 +65,14 @@ async function displayTokenProfiles() {
         tokenLink.innerText = 'Buy Token';
 
         tokenInfo.appendChild(tokenName);
-        tokenInfo.appendChild(tokenDescription);
         tokenInfo.appendChild(chainId);
         tokenInfo.appendChild(tokenAddressContainer);
         tokenInfo.appendChild(tokenLink);
+
+        // Açıklama en alta taşındı
+        const tokenDescription = document.createElement('p');
+        tokenDescription.innerText = `"${token.description || 'No description available.'}"`;
+        tokenInfo.appendChild(tokenDescription);
 
         tokenCard.appendChild(tokenIcon);
         tokenCard.appendChild(tokenInfo);
