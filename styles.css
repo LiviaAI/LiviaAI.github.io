@@ -211,7 +211,7 @@ footer p {
     color: #bbb;
 }
 
-/* Dinamik Yazı Rengi Değişimi (JavaScript ile kontrol edilebilir) */
+/* Dinamik Yazı Rengi Değişimi */
 .token-card[data-active="true"] .token-description {
     color: #ff5733; /* Etkin token için farklı yazı rengi */
 }
