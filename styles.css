@@ -106,7 +106,7 @@ main {
     font-size: 14px;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    max-width: 100%;
+    max-width: 80%; /* Genişlik sınırlaması eklendi */
     text-overflow: ellipsis;
     white-space: nowrap;
     display: inline-block;
@@ -197,6 +197,17 @@ main {
     .token-info p {
         font-size: 1em; /* Küçük ekranlarda daha küçük font */
     }
+}
+
+/* Linkler */
+a {
+    color: #8a2be2; /* Mor renk linkler için */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #9b30ff; /* Hover efektinde daha koyu mor */
 }
 
 /* Footer kısmı */
