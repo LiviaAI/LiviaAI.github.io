@@ -21,13 +21,13 @@ header {
 }
 
 header h1 {
-    font-size: 5vw; /* Ekran genişliğine göre ayarlama */
+    font-size: 2.5rem; /* Masaüstü için sabit font büyüklüğü */
     margin: 0;
     color: #8a2be2; /* Mor renk başlık için */
 }
 
 header p {
-    font-size: 2vw; /* Ekran genişliğine göre ayarlama */
+    font-size: 1.2rem; /* Masaüstü için sabit font büyüklüğü */
     color: #bbb; /* Açık gri renk metin için */
 }
 
@@ -58,14 +58,14 @@ main {
     display: flex;
     flex-direction: row;
     background-color: #2e2e2e; /* Koyu gri arka plan */
-    padding: 5%;
+    padding: 2rem;
     border-radius: 12px;
     color: white;
     opacity: 0;
     animation: fadeIn 0.6s forwards;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     width: 100%;
-    max-width: 500px; /* Kartların maksimum genişliği */
+    max-width: 400px; /* Kartların maksimum genişliği */
     flex: 1 1 30%; /* Kartların otomatik olarak boyutlanmasını sağlar */
 }
 
@@ -74,10 +74,10 @@ main {
 }
 
 .token-card img {
-    width: 15vw; /* Genişlik ekranın %15'i kadar */
-    height: auto; /* Yükseklik oranını korur */
+    width: 80px; /* Sabit resim genişliği */
+    height: 80px; /* Sabit resim yüksekliği */
     border-radius: 50%;
-    margin-right: 5%;
+    margin-right: 2rem;
     transition: transform 0.3s ease;
 }
 
@@ -106,7 +106,7 @@ main {
 
 /* Token Address */
 .token-address {
-    font-size: 4vw; /* Ekran genişliğine göre ayarlama */
+    font-size: 1rem; /* Masaüstü için sabit font büyüklüğü */
     word-wrap: break-word;
     overflow-wrap: break-word;
     max-width: 100%;
@@ -121,8 +121,8 @@ main {
 .token-description {
     font-style: italic;
     color: #aaa;
-    margin-top: 20px;
-    font-size: 3vw; /* Ekran genişliğine göre ayarlama */
+    margin-top: 1rem;
+    font-size: 1rem; /* Sabit font büyüklüğü */
 }
 
 /* Buy Token Butonu */
@@ -130,11 +130,11 @@ main {
     background-color: #8a2be2; /* Mor arka plan */
     color: white;
     text-decoration: none;
-    padding: 8% 10%;
+    padding: 1rem 2rem;
     border-radius: 8px;
-    font-size: 3vw; /* Ekran genişliğine göre ayarlama */
+    font-size: 1.2rem; /* Sabit font büyüklüğü */
     font-weight: bold;
-    margin-top: 10%;
+    margin-top: 1rem;
     text-align: center;
     display: block;
     transition: background-color 0.3s ease, transform 0.3s ease;
@@ -174,4 +174,45 @@ footer p {
 /* Dinamik Yazı Rengi Değişimi */
 .token-card[data-active="true"] .token-description {
     color: #ff5733; /* Etkin token için farklı yazı rengi */
+}
+
+/* Mobil tasarım için stiller */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 5vw; /* Ekran genişliğine göre başlık boyutu */
+    }
+
+    header p {
+        font-size: 3vw; /* Ekran genişliğine göre alt başlık boyutu */
+    }
+
+    .token-list {
+        width: 95%;
+    }
+
+    .token-card {
+        flex-direction: column;
+        padding: 2rem;
+        width: 100%;
+        max-width: 100%; /* Kartlar ekran genişliğine sığacak */
+    }
+
+    .token-address {
+        font-size: 4vw; /* Ekran genişliğine göre font büyüklüğü */
+        white-space: normal;
+    }
+
+    .token-description {
+        font-size: 4vw; /* Ekran genişliğine göre font büyüklüğü */
+    }
+
+    .token-buy-btn {
+        font-size: 5vw; /* Ekran genişliğine göre buton boyutu */
+        padding: 8% 15%;
+    }
+
+    .token-address-container {
+        flex-direction: column; /* Mobilde dikey hizalama */
+        align-items: flex-start; /* Soldan hizalar */
+    }
 }
