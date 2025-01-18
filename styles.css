@@ -91,27 +91,32 @@ main {
     width: 100%;
 }
 
-/* Token Address */
+/* Token Address Container */
 .token-address-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    word-wrap: break-word; /* Uzun metinlerin taşmasını engeller */
+    overflow-wrap: break-word; /* Kırılmasını sağlar */
     max-width: 100%;
     margin-bottom: 10px;
+    word-break: break-all; /* Eğer kelime uzun olursa, kelimenin tamamını böler */
 }
 
+/* Token Address */
 .token-address {
     font-size: 14px;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    max-width: 80%; /* Genişlik sınırlaması eklendi */
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    max-width: 100%;
+    text-overflow: ellipsis; /* Taşan metni ... ile keser */
+    white-space: nowrap; /* Metnin tek satırda kalmasını sağlar */
     display: inline-block;
     overflow: hidden;
+    width: 100%; /* Genişliği yüzde 100 yaparak tam kapsama sağlar */
+    word-break: break-all; /* Adres çok uzun ise kelimeyi bölüp satır sonunda taşmasını engeller */
 }
+
 
 /* Token Description */
 .token-description {
