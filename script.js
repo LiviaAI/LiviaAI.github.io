@@ -76,21 +76,18 @@ async function displayTokenProfiles() {
 
         // Token bilgileri
         const tokenInfo = document.createElement('div');
-        const tokenName = document.createElement('h3');
-        tokenName.innerText = token.tokenAddress || 'Token Address Unavailable';
+        
+        // Token Address üstte olsun
+        const tokenAddress = document.createElement('p');
+        tokenAddress.innerText = `Token Address: ${token.tokenAddress || 'N/A'}`;
 
-        const tokenSymbol = document.createElement('p'); // Token Symbol
-        tokenSymbol.innerText = `Token Symbol: ${await fetchTokenSymbol(token.url)}`;
-
+        // Token Description
         const tokenDescription = document.createElement('p');
         tokenDescription.innerText = `"${token.description || 'No description available.'}"`;
 
-        // Chain Id ve tokenAddress bilgileri
+        // Chain Id bilgisi
         const chainId = document.createElement('p');
         chainId.innerText = `Chain: ${token.chainId.toUpperCase() || 'N/A'}`;
-
-        const tokenAddress = document.createElement('p');
-        tokenAddress.innerText = `Token Address: ${token.tokenAddress || 'N/A'}`;
 
         // Copy butonu
         const copyButton = document.createElement('span');
@@ -146,9 +143,9 @@ async function displayTokenProfiles() {
             tokenInfo.appendChild(linksContainer);
         }
 
-        tokenInfo.appendChild(tokenName);
-        tokenInfo.appendChild(tokenSymbol); // Token symbol'ü ekliyoruz
-        tokenInfo.appendChild(tokenDescription);
+        // Token verilerini ekleyelim
+        tokenInfo.appendChild(tokenAddress); // Token Address üstte
+        tokenInfo.appendChild(tokenDescription); // Token description
         tokenInfo.appendChild(chainId);
         tokenInfo.appendChild(tokenAddressContainer);
         tokenInfo.appendChild(tokenLink);
@@ -190,4 +187,4 @@ async function checkNewToken() {
 fetchInitialTokenProfiles();
 
 // Her saniye yeni token'ları kontrol et
-setInterval(checkNewToken, 1000); 
+setInterval(checkNewToken, 1000);
