@@ -3,34 +3,20 @@ let tokenData = []; // Token verileri burada tutulacak
 // Sayfa yüklendiğinde son 10 token'ı al
 async function fetchInitialTokenProfiles() {
     try {
-        // API endpoint'ine GET isteği gönderiyoruz
         const response = await fetch('https://api.dexscreener.com/token-profiles/latest/v1', {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json', // Bu başlık, API'nin doğru veri formatında dönmesini sağlar
-            },
+            headers: {},
         });
 
-        if (!response.ok) {
-            // Eğer API'den hata dönerse
-            throw new Error(`API request failed with status: ${response.status}`);
-        }
-
-        const data = await response.json(); // JSON formatında veri alıyoruz
-
-        // API'den dönen veriyi kontrol edelim
-        console.log(data);  // Dönen veriyi kontrol etmek için konsola yazdıralım
-
-        // Eğer data boş değilse, verileri işleyelim
+        const data = await response.json();
+        
+        // Son 10 token'ı sayfada göster
         if (data && data.length > 0) {
-            tokenData = data.slice(0, 10); // Son 10 token'ı alıyoruz
+            tokenData = data.slice(0, 10); // Son 10 token
             displayTokenProfiles(); // Tokenları görüntüle
-        } else {
-            console.log("No data found");
         }
 
     } catch (error) {
-        // Hata durumunda mesaj yazdıralım
         console.error("API hatası:", error);
     }
 }
@@ -54,10 +40,6 @@ async function displayTokenProfiles() {
         const tokenInfo = document.createElement('div');
         const tokenName = document.createElement('h3');
         tokenName.innerText = token.tokenAddress || 'Token Address Unavailable';
-
-        // Contract Address
-        const contractAddress = document.createElement('p');
-        contractAddress.innerText = `Contract Address: ${token.tokenAddress || 'N/A'}`;
 
         // Chain Id bilgisi
         const chainId = document.createElement('p');
@@ -83,46 +65,29 @@ async function displayTokenProfiles() {
         tokenLink.innerText = 'Buy Token';
 
         tokenInfo.appendChild(tokenName);
-        tokenInfo.appendChild(contractAddress);  // Contract Address burada eklendi
         tokenInfo.appendChild(chainId);
         tokenInfo.appendChild(tokenAddressContainer);
         tokenInfo.appendChild(tokenLink);
 
-        // Links kısmını ekleyelim (örneğin, Website, Twitter, Telegram)
+        // Links kısmını ekleyelim (örneğin, Twitter linki)
         if (token.links && token.links.length > 0) {
             const linksContainer = document.createElement('div');
             linksContainer.classList.add('token-links');
 
-            // Linkleri düzenli göster
             token.links.forEach(link => {
                 const linkElement = document.createElement('a');
                 linkElement.href = link.url;
                 linkElement.target = '_blank';
-
-                // Eğer link türü undefined ise "Visit Website" yazsın
-                if (link.type === "undefined") {
-                    linkElement.innerText = "Visit Website";
-                } else {
-                    linkElement.innerText = `Visit ${link.type.charAt(0).toUpperCase() + link.type.slice(1)}`;
-                }
-
+                linkElement.innerText = `Visit ${link.type}`;
                 linksContainer.appendChild(linkElement);
-
-                // Linkler arasında boşluk ekleyelim
-                linksContainer.appendChild(document.createTextNode(' - '));
             });
-
-            // Sonundaki boşluğu temizle
-            if (linksContainer.lastChild === document.createTextNode(' - ')) {
-                linksContainer.removeChild(linksContainer.lastChild);
-            }
 
             tokenInfo.appendChild(linksContainer);
         }
 
-        // Token description kısmı
+        // Açıklama en alta taşındı
         const tokenDescription = document.createElement('p');
-        tokenDescription.innerText = token.description || 'No description available.';
+        tokenDescription.innerText = `"${token.description || 'No description available.'}"`;
         tokenInfo.appendChild(tokenDescription);
 
         tokenCard.appendChild(tokenIcon);
