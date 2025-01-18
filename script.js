@@ -3,20 +3,34 @@ let tokenData = []; // Token verileri burada tutulacak
 // Sayfa yüklendiğinde son 10 token'ı al
 async function fetchInitialTokenProfiles() {
     try {
+        // API endpoint'ine GET isteği gönderiyoruz
         const response = await fetch('https://api.dexscreener.com/token-profiles/latest/v1', {
             method: 'GET',
-            headers: {},
+            headers: {
+                'Content-Type': 'application/json', // Bu başlık, API'nin doğru veri formatında dönmesini sağlar
+            },
         });
 
-        const data = await response.json();
-        
-        // Son 10 token'ı sayfada göster
+        if (!response.ok) {
+            // Eğer API'den hata dönerse
+            throw new Error(`API request failed with status: ${response.status}`);
+        }
+
+        const data = await response.json(); // JSON formatında veri alıyoruz
+
+        // API'den dönen veriyi kontrol edelim
+        console.log(data);  // Dönen veriyi kontrol etmek için konsola yazdıralım
+
+        // Eğer data boş değilse, verileri işleyelim
         if (data && data.length > 0) {
-            tokenData = data.slice(0, 10); // Son 10 token
+            tokenData = data.slice(0, 10); // Son 10 token'ı alıyoruz
             displayTokenProfiles(); // Tokenları görüntüle
+        } else {
+            console.log("No data found");
         }
 
     } catch (error) {
+        // Hata durumunda mesaj yazdıralım
         console.error("API hatası:", error);
     }
 }
