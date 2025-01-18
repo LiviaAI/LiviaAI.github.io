@@ -197,10 +197,15 @@ main {
 
     .token-address {
         font-size: 12px; /* Küçük ekranlarda daha küçük font */
+        white-space: normal;
     }
 
     .token-info p {
         font-size: 1em; /* Küçük ekranlarda daha küçük font */
+    }
+    .token-address-container {
+        flex-direction: column; /* Mobilde dikey hizalama */
+        align-items: flex-start; /* Soldan hizalar */
     }
 }
 
