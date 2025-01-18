@@ -80,41 +80,43 @@ header p {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    word-wrap: break-word; /* Adresi sarmak için */
+    word-wrap: break-word;
     overflow-wrap: break-word;
 }
 
 .token-address {
     word-wrap: break-word;
     overflow-wrap: break-word;
-    max-width: 100%; /* Adresi sınırlar */
+    max-width: 100%;
     font-size: 14px;
-}
-
-/* Buy Token Butonu */
-.token-buy-btn {
-    background-color: #3498db; /* Mavi renk */
-    color: white;
-    text-decoration: none;
-    padding: 15px 30px;
-    border-radius: 8px;
-    font-size: 1.2em;
+    color: #8a2be2; /* Mor tonlarında */
     font-weight: bold;
-    margin-top: 20px;
-    text-align: center;
-    display: block;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #8a2be2; /* Alt çizgi */
+    padding-bottom: 4px;
 }
 
-.token-buy-btn:hover {
-    background-color: #2980b9; /* Hover rengini koyu mavi yap */
-    transform: translateY(-5px);
+/* Token Description */
+.token-description {
+    font-style: italic;
+    color: #b0b0b0;
+    background-color: #2c2c2c;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+    font-size: 1.1em;
 }
 
-.token-buy-btn:active {
-    transform: translateY(2px);
+/* Chain */
+.token-info p:last-of-type {
+    color: #50c878; /* Yeşil renk (Chain için) */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding-top: 8px;
 }
-
 
 /* Copy butonu */
 .copy-button {
@@ -179,6 +181,10 @@ header p {
     }
 
     .token-info p {
+        font-size: 1em; /* Küçük ekranlarda daha küçük font */
+    }
+
+    .token-description {
         font-size: 1em; /* Küçük ekranlarda daha küçük font */
     }
 }
