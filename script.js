@@ -188,6 +188,13 @@ async function checkNewToken() {
     }
 }
 
+const tokenCards = document.querySelectorAll('.token-card');
+
+tokenCards.forEach(card => {
+    // Bir token kartını aktif hale getirmek
+    card.setAttribute('data-active', 'true');
+});
+
 // İlk başta son 10 token'ı çek
 fetchInitialTokenProfiles();
 
