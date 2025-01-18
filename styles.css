@@ -35,6 +35,7 @@ header p {
     margin: 40px 10px;
 }
 
+/* Token kartı */
 .token-card {
     display: flex;
     flex-direction: row;
@@ -66,6 +67,7 @@ header p {
     transform: scale(1.1);
 }
 
+/* Token bilgileri */
 .token-info {
     display: flex;
     flex-direction: column;
@@ -73,12 +75,30 @@ header p {
     width: 100%;
 }
 
-.token-info p {
-    margin: 8px 0;
-    font-size: 1.1em;
-    color: #ddd;
+/* Token Address */
+.token-address-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    word-wrap: break-word; /* Adresi sarmak için */
+    overflow-wrap: break-word;
 }
 
+.token-address {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%; /* Adresi sınırlar */
+    font-size: 14px;
+}
+
+/* Token Description */
+.token-description {
+    font-style: italic;
+    color: #aaa;
+    margin-top: 20px;
+}
+
+/* Token linkleri */
 .token-info a {
     color: #4CAF50;
     text-decoration: none;
@@ -93,6 +113,7 @@ header p {
     color: #121212;
 }
 
+/* Copy butonu */
 .copy-button {
     display: none;
     color: #4CAF50;
@@ -128,13 +149,6 @@ header p {
     transform: translateY(2px);
 }
 
-/* Token description */
-.token-description {
-    font-style: italic;
-    color: #aaa;
-    margin-top: 20px;
-}
-
 /* Animasyon */
 @keyframes fadeIn {
     from {
@@ -155,5 +169,13 @@ header p {
     .token-buy-btn {
         font-size: 1.1em;
         padding: 12px 25px;
+    }
+
+    .token-address {
+        font-size: 12px; /* Küçük ekranlarda daha küçük font */
+    }
+
+    .token-info p {
+        font-size: 1em; /* Küçük ekranlarda daha küçük font */
     }
 }
