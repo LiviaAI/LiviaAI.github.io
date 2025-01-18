@@ -188,15 +188,19 @@ async function checkNewToken() {
     }
 }
 
-const tokenCards = document.querySelectorAll('.token-card');
-
-tokenCards.forEach(card => {
-    // Bir token kartını aktif hale getirmek
-    card.setAttribute('data-active', 'true');
-});
-
 // İlk başta son 10 token'ı çek
 fetchInitialTokenProfiles();
 
 // Her saniye yeni token'ları kontrol et
 setInterval(checkNewToken, 1000);
+// Token kartlarını seçiyoruz
+const tokenCards = document.querySelectorAll('.token-card');
+
+// Örnek olarak, her token kartına etkinleştirme işlemi ekliyoruz
+tokenCards.forEach(card => {
+    // Burada, 'active' durumu belirleyen bir olay ekleyebilirsiniz
+    // Örneğin, kart üzerine tıklandığında aktif hale getirebilirsiniz
+    card.addEventListener('click', () => {
+        card.setAttribute('data-active', 'true');
+    });
+});
