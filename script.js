@@ -41,6 +41,10 @@ async function displayTokenProfiles() {
         const tokenName = document.createElement('h3');
         tokenName.innerText = token.tokenAddress || 'Token Address Unavailable';
 
+        // Contract Address
+        const contractAddress = document.createElement('p');
+        contractAddress.innerText = `Contract Address: ${token.tokenAddress || 'N/A'}`;
+
         // Chain Id bilgisi
         const chainId = document.createElement('p');
         chainId.innerText = `Chain: ${token.chainId.toUpperCase() || 'N/A'}`;
@@ -65,6 +69,7 @@ async function displayTokenProfiles() {
         tokenLink.innerText = 'Buy Token';
 
         tokenInfo.appendChild(tokenName);
+        tokenInfo.appendChild(contractAddress);  // Contract Address burada eklendi
         tokenInfo.appendChild(chainId);
         tokenInfo.appendChild(tokenAddressContainer);
         tokenInfo.appendChild(tokenLink);
@@ -101,9 +106,9 @@ async function displayTokenProfiles() {
             tokenInfo.appendChild(linksContainer);
         }
 
-        // Açıklama en alta taşındı
+        // Token description kısmı
         const tokenDescription = document.createElement('p');
-        tokenDescription.innerText = `"${token.description || 'No description available.'}"`;
+        tokenDescription.innerText = token.description || 'No description available.';
         tokenInfo.appendChild(tokenDescription);
 
         tokenCard.appendChild(tokenIcon);
